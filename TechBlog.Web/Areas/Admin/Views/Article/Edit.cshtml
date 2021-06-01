@@ -1,0 +1,244 @@
+﻿@model TechBlog.Web.Areas.Admin.ViewModels.Article.EditViewModel
+@using TechBlog.Utils.Converters
+@{
+    ViewBag.Title = "Edit article";
+}
+
+@using (Html.BeginForm("Edit", "Article", new { area = "Admin" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-md-12">
+            @Html.HiddenFor(m => m.ReturnUrl)
+            @Html.HiddenFor(m => m.Id)
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <input type="submit" value="Save & Close" class="btn btn-success" />
+
+                    @Html.ActionLink("Back", "MyRedirect", new { url = Model.ReturnUrl }, new { @class = "btn btn-large btn-default" })
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Url, htmlAttributes: new { @class = "control-label" })
+                    @if (Model.CanEditUrl)
+                    {
+                        @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control", placeholder = "Article url" } })
+                    }
+                    else
+                    {
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.Url, new { htmlAttributes = new { id = "js-input-url", @class = "form-control", placeholder = "Article url", @readonly = "readonly" } })
+                            <span class="input-group-btn">
+                                <button id="js-button-edit-url" type="button" class="btn btn-secondary" data-target="js-input-url" data-toggle="button" aria-pressed="false" autocomplete="off">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                        </div>
+                    }
+                    @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
+
+                    @*<button id="@("publish-button" + @article.Id.ToString())"
+                                class="btn btn-sm btn-danger async-button"
+                                data-url="@Url.Action("SetVisibility", "Article", new { area = "Admin", articleId = article.Id, visible = true })"
+                                data-makevisible="@("#unpublish-button" + @article.Id.ToString())"
+                                title="Article is not visible"
+                                style="@(article.Visible ? hidden : visible)">
+                            Publish
+                        </button>
+
+                        <button id="@("unpublish-button" + @article.Id.ToString())"
+                                class="btn btn-sm btn-success async-button"
+                                data-url="@Url.Action("SetVisibility", "Article", new { area = "Admin", articleId = article.Id, visible = false })"
+                                data-makevisible="@("#publish-button" + @article.Id.ToString())"
+                                title="Article is visible"
+                                style="@(article.Visible ? visible : hidden)">
+                            UnPublish
+                        </button>*@
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Article title" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Tags, new { @class = "control-label" })
+                    <input type="text" name="SelectedTags" id="tokenfield" class="form-control" value="" />
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Article description (250)", rows = "3" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-row">
+                    <div class="col-auto">
+                        <div class="form-group">
+                            <label>Publish article:</label>
+                            @{
+                                string hidden = "visibility: hidden";
+                                string visible = "visibility: visible";
+                            }
+                            <button id="@("publish-button" + Model.Id.ToString())"
+                                    class="btn btn-sm btn-danger async-button"
+                                    type="button"
+                                    data-url="@Url.Action("SetVisibility", "Article", new { area = "Admin", articleId = Model.Id, visible = true })"
+                                    data-makevisible="@("#unpublish-button" + Model.Id.ToString())"
+                                    title="Article is not visible"
+                                    style="@(Model.Visible ? hidden : visible)">
+                                Publish
+                            </button>
+
+                            <button id="@("unpublish-button" + Model.Id.ToString())"
+                                    type="button"
+                                    class="btn btn-sm btn-success async-button"
+                                    data-url="@Url.Action("SetVisibility", "Article", new { area = "Admin", articleId = Model.Id, visible = false })"
+                                    data-makevisible="@("#publish-button" + Model.Id.ToString())"
+                                    title="Article is visible"
+                                    style="@(Model.Visible ? visible : hidden)">
+                                UnPublish
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <a class="btn btn-secondary" data-toggle="collapse" data-parent="#exampleAccordion" href="#metaDescription1" aria-expanded="false" aria-controls="metaDescription1">
+                        Meta tags
+                    </a>
+                    <div id="metaDescription1" class="collapse" role="tabpanel">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MetaDescription, htmlAttributes: new { @class = "control-label" })
+                            @Html.TextAreaFor(model => model.MetaDescription, new { @class = "form-control", placeholder = "Meta description (250)", rows = "2" })
+                            @Html.ValidationMessageFor(model => model.MetaDescription, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MetaKeywords, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.MetaKeywords, new { htmlAttributes = new { @class = "form-control", placeholder = "Meta keywords (100)" } })
+                            @Html.ValidationMessageFor(model => model.MetaKeywords, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    @Html.TextAreaFor(model => model.Content, new { id = "mytextarea" })
+}
+@*<textarea id="mytextarea">@Model.Content</textarea>*@
+
+
+@section Css{
+    @Html.HtmlCssCached("jqueryUiCss")
+    @Html.HtmlCssCached("tokenfieldCss")
+    @*@Styles.Render("~/style-bundles/jquery-ui")
+        @Styles.Render("~/style-bundles/loadfile")*@
+}
+
+@section ScriptsHead {
+    <script src="~/Content/components/tinymce/tinymce.min.js"></script>
+
+    <script>
+        tinymce.init({
+            selector: '#mytextarea',
+            height: 500,
+            relative_urls: false,
+            remove_script_host: false,
+            convert_urls: false,
+            //toolbar2: 'menu-insert-content',
+            plugins: [
+                'preview',
+                'code',
+                'link', 'image', 'template'
+            ],
+            templates: [
+                { title: 'Google ads', content: '<p>{{article-advertisement}}</p>' }//,
+                //{ title: 'Test template 2', content: 'Test 2' }
+            ],
+            //setup: function (editor) {
+            //    editor.addButton('menu-insert-content', {
+            //        type: 'menubutton',
+            //        text: 'Insert content',
+            //        icon: false,
+            //        menu: [{
+            //            text: 'Add Ads',
+            //            onclick: function () {
+            //                editor.insertContent('<p>{{article-advertisement}}</p>');
+            //            }
+            //        }]
+            //    });
+            //}
+        });
+    </script>
+}
+@section Scripts {
+    @Html.HtmlScriptsCached("jqueryval")
+    @Html.HtmlScriptsCached("tokenfieldJs")
+
+    <script>
+        $(document).ready(function () {
+            getTags(function (tags) {
+                $('#tokenfield').tokenfield({
+                    autocomplete: {
+                        source: tags,
+                        delay: 100
+                    },
+                    tokens: @Html.Raw(Model.Tags.Select(s => new { value = s.Code, label = s.Name }).ToList().ToJson()),
+                    showAutocompleteOnFocus: true
+                });
+            });
+
+            $("#js-button-edit-url").on("click", function () {
+                var button = $(this);
+                var target = $("#" + button.data("target"));
+                var re = target.prop('readonly');
+                target.prop('readonly', !re);
+            });
+
+            $('.async-button').each(function (index, button) {
+                bindButton(button);
+            });
+        });
+
+        function getTags(handleData)
+        {
+            $.ajax({
+                url:'@Url.Action("GetTags", "Tag")',
+                type: 'GET',
+                success:function(data) {
+                    handleData(data);
+                }
+            });
+        };
+
+        function bindButton(button) {
+            var buttonSel = $(button)
+
+            buttonSel.on("click", function () {
+                var ajaxResp = ajaxAction(buttonSel.data("url")).done(function () {
+                    toggleButtonClass(buttonSel);
+                });
+            });
+        };
+
+        function toggleButtonClass(buttonSel) {
+            var makevisible = buttonSel.data("makevisible");
+
+            buttonSel.css("visibility", "hidden");
+            $(makevisible).css("visibility", "visible");
+
+        };
+
+        function ajaxAction(url) {
+            return $.ajax({
+                url: url,
+                type: "GET",
+                dataType: 'json',
+                error: function (xhr, status, err) {
+                    console.error(turl, status, err.toString());
+                }
+            });
+        };
+    </script>
+
+}

@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Not found";
+}
+
+<div class="container body-content">
+    <div class="bs-callout bs-callout-danger" style="margin-top: 50px">
+        <h1>404 Not Found</h1>
+
+        <p class="lead">
+            The page you are looking for can not be found.
+        </p>
+    </div>
+
+    <div style="margin: 50px 0">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            Back to homepage
+        </a>
+    </div>
+</div>

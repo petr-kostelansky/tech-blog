@@ -1,0 +1,59 @@
+{
+  "mainCss": [
+    "bower_components/bootstrap/dist/css/bootstrap.css",
+    "resources/css/site.css",
+    "resources/css/PagedList.css",
+    "bower_components/font-awesome/css/font-awesome.css",
+    "resources/components/cookiebar/jquery.cookiebar.css"
+  ],
+  "articleCss": [
+    "resources/sass/css/article.css",
+    "bower_components/enlighterjs/Build/EnlighterJS.css"
+  ],
+  "articleJs": [
+    "bower_components/mootools/dist/mootools-core.js",
+    "bower_components/enlighterjs/Build/EnlighterJS.js"
+  ],
+  "mainJs": [
+    "bower_components/jquery/dist/jquery.js",
+    "bower_components/popper.js/dist/umd/popper.js",
+    "bower_components/bootstrap/dist/js/bootstrap.js",
+    "resources/components/cookiebar/jquery.cookiebar.js"
+  ],
+  "headAppJs": [
+    "resources/js/modernizr-2.6.2.js",
+    "resources/js/respond.js"
+  ],
+  "appJs": [
+    "resources/js/async.js",
+    "resources/js/common.js",
+    "resources/js/load-more.js"
+  ],
+  "jqueryUiCss": [
+    "bower_components/jquery-ui/themes/base/jquery-ui.css"
+  ],
+  "jqueryUi": [
+    "bower_components/jquery-ui/jquery-ui.js"
+  ],
+  "jqueryval": [
+    "bower_components/jquery.validation/dist/jquery.validate.js",
+    "bower_components/Microsoft.jQuery.Unobtrusive.Validation/jquery.validate.unobtrusive.js"
+  ],
+  "tokenfieldJs": [
+    "bower_components/bootstrap-tokenfield/dist/bootstrap-tokenfield.js"
+  ],
+  "tokenfieldCss": [
+    "bower_components/bootstrap-tokenfield/dist/css/bootstrap-tokenfield.css",
+    "bower_components/bootstrap-tokenfield/dist/css/tokenfield-typeahead.css"
+  ],
+  "dataTableJs": [
+    "bower_components/datatables.net/js/jquery.dataTables.js",
+    "bower_components/datatables.net-responsive/js/dataTables.responsive.js",
+    "bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.js"
+  ],
+  "dataTableCss": [
+    
+    "bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.css"
+  ]
+}
+

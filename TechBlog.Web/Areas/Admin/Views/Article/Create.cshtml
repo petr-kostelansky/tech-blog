@@ -1,0 +1,106 @@
+﻿@model TechBlog.Web.Areas.Admin.ViewModels.Article.CreateViewModel
+@{
+    ViewBag.Title = "New article";
+}
+
+
+@using (Html.BeginForm("Create", "Article", new { area = "Admin" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-md-12">
+            @Html.HiddenFor(m => m.ReturnUrl)
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="submit" value="Save" class="btn btn-success" />
+
+                        @Html.ActionLink("Back", "MyRedirect", new { url = Model.ReturnUrl }, new { @class = "btn btn-large btn-default" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Url, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control", placeholder = "Article url" } })
+                    @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Article title" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Tags, new { @class = "control-label" })
+                    <input type="text" name="SelectedTags" id="tokenfield" class="form-control" value="" />
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Article description (250)", rows = "3" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @Html.TextAreaFor(model => model.Content, 20, 100, new { id = "mytextarea" })
+        </div>
+    </div>
+}
+
+
+
+@section Css{
+    @Html.HtmlCssCached("jqueryUiCss")
+    @Html.HtmlCssCached("tokenfieldCss")
+    @*@Styles.Render("~/style-bundles/jquery-ui")
+        @Styles.Render("~/style-bundles/loadfile")*@
+}
+
+@section ScriptsHead {
+    <script src="~/Content/components/tinymce/tinymce.min.js"></script>
+
+    <script>
+        tinymce.init({
+            selector: '#mytextarea',
+            height: 500,
+            relative_urls: false,
+            remove_script_host: false,
+            convert_urls: false,
+            plugins: [
+                'preview',
+                'code',
+                'link', 'image'
+            ],
+        });
+    </script>
+}
+@section Scripts {
+    @Html.HtmlScriptsCached("jqueryval")
+    @Html.HtmlScriptsCached("tokenfieldJs")
+
+    <script>
+        $().ready(function () {
+            getTags(function (tags) {
+                $('#tokenfield').tokenfield({
+                    autocomplete: {
+                        source: tags,
+                        delay: 100
+                    },
+                    tokens: "",
+                    showAutocompleteOnFocus: true
+                });
+            });
+        });
+
+        function getTags(handleData)
+        {
+            $.ajax({
+                url:'@Url.Action("GetTags", "Tag")',
+                type: 'GET',
+                success:function(data) {
+                    handleData(data);
+                }
+            });
+        }
+    </script>
+}

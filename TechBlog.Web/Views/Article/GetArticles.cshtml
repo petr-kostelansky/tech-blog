@@ -1,0 +1,95 @@
+﻿@model TechBlog.Web.ViewModels.Articles.ArticlesViewModel
+@using System;
+@using Newtonsoft.Json;
+@using Newtonsoft.Json.Serialization;
+
+@{
+    ViewBag.Title = "SearchArticle";
+}
+
+@section Css{
+
+    @Html.HtmlCssCached("articleCss")
+}
+
+@if (!String.IsNullOrEmpty(@Model.Filter.Tag) && !String.IsNullOrEmpty(Model.Tag))
+{
+    <div class="section-top introduction-articles">
+        <div class="container body-content">
+            <h1 class="article">
+                Articles for: @Model.Tag
+            </h1>
+        </div>
+    </div>
+}
+
+@if (@Model.Filter.AuthorId != null && !String.IsNullOrEmpty(Model.Author))
+{
+    <div class="section-top introduction-articles">
+        <div class="container body-content">
+            <h1 class="article">
+                Articles by: @Model.Author
+            </h1>
+        </div>
+    </div>
+}
+
+<div class="container body-content article-container">
+    <div class="row">
+        <div id="area-load-more">
+            @foreach (var article in Model.Articles)
+            {
+                <div class="col-md-12">
+                    <h2>
+                        <a href="@Url.Action("GetArticle", "Article", new { url = article.Url })">
+                            @article.Title
+                        </a>
+                    </h2>
+                    <p class="col-md-12">
+                        @article.Description
+                    </p>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div style="text-align:center">
+        <p>
+            <button id="button-load-more" class="btn btn-secondary" type="button" style="width: 140px; display: none;">
+                <i class="fa fa-spinner fa-pulse" style="display:none"></i>
+                <span>Load more</span>
+            </button>
+        </p>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+        @{
+            var serializerSettings = new JsonSerializerSettings();
+            serializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        }
+
+        (function GetArticles($) {
+            'use strict';
+
+            $(document).ready(onLoad);
+
+            var urlParams = @Html.Raw(JsonConvert.SerializeObject(Model.Filter, serializerSettings));
+
+            var mySettings = {};
+            mySettings.totalItemsCount = @Model.Articles.TotalItemCount;
+            mySettings.loadedItemsCount = @Model.Articles.Count();
+            mySettings.url = "@Url.Action("AsyncLoadMore", "Article")";
+
+            var myLoadMore = new LoadMore(mySettings, urlParams);
+
+            function onLoad() {
+                myLoadMore.init();
+            };
+
+        })(jQuery);
+    </script>
+}
+

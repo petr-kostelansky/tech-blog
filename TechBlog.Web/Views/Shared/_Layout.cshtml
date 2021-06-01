@@ -1,0 +1,82 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#333333">
+    <meta name="description" content="@ViewBag.MetaDescription">
+    <meta name="keywords" content="@ViewBag.MetaKeywords">
+    <title>@ViewBag.Title - DevCode4</title>
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+    @Html.HtmlCssCached("mainCss")
+    @RenderSection("Css", required: false)
+
+    @Html.HtmlScriptsCached("headAppJs")
+
+    @Html.Partial("_GoogleAnalytics")
+    @RenderSection("GoogleAnalyticsSet", required: false)
+    @Html.Partial("_GoogleAnalyticsSend")
+
+    @RenderSection("GoogleAds", required: false)
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container">
+            @Html.ActionLink("DevCode4", "Index", "Home", new { area = "" }, new { @class = "navbar-brand logo-text" })
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="navbarCollapse" style="">
+                <ul class="navbar-nav mr-auto">
+                    @*<li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("index", "article")">Articles</a>
+                    </li>*@
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+
+    @RenderBody()
+    
+    <footer class="body-content">
+        <div class="container body-content">
+            <hr />
+            <p><small>&copy; @DateTime.Now.Year - DevCode4, make with enthusiasm <i class="fa fa-pagelines" aria-hidden="true"></i></small></p>
+        </div>
+    </footer>
+
+    @Html.HtmlScriptsCached("mainJs")
+    @Html.HtmlScriptsCached("appJs")
+    @RenderSection("Scripts", required: false)
+
+    <script>
+        (function Layout() {
+            $(document).ready(onLoad)
+
+            function onLoad() {
+                Async.loadPartialViews();
+
+                $.cookieBar();
+
+                $('#cookie-bar .cb-enable').on('click', function () {
+                    $('#footer').animate({
+                        'padding-bottom': 0
+                    }, "slow");
+                });
+
+                var cookieaBarValue = Common.getCookie("cb-enabled");
+                if (cookieaBarValue != 'accepted') {
+                    $('#footer').css("padding-bottom", "25px");
+                }
+            }
+        })(jQuery)
+    </script>
+
+</body>
+</html>

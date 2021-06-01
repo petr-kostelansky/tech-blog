@@ -1,0 +1,78 @@
+﻿@model TechBlog.Web.Areas.Admin.ViewModels.Account.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="row">
+    <section id="login-section">
+        <div class="container body-content" style="padding: 50px 0">
+
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @id = "login-form", @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Login.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10" style="max-width: 280px">
+                        @Html.TextBoxFor(m => m.Login.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Login.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Login.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10" style="max-width: 280px">
+                        @Html.PasswordFor(m => m.Login.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Login.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.Login.RememberMe)
+                            @Html.LabelFor(m => m.Login.RememberMe)
+                        </div>
+                    </div>
+                </div>
+                @*<div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6LcboSwUAAAAAHgavC1s6_JnJsbmhJbYyrGs4p2O"></div>
+                    </div>
+                </div>*@
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button id="submit-button"
+                                class="btn btn-default g-recaptcha"                                 
+                                data-sitekey="6LcboSwUAAAAAHgavC1s6_JnJsbmhJbYyrGs4p2O"
+                                data-callback="recaptchaCallback"
+                                type="submit">
+                            Log in
+                        </button>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </section>
+</div>
+
+@section ScriptsHead{
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+}
+
+@section Scripts {
+    @*@Html.RenderJsBundle("~/Scripts/bundle-jqueryval.js.bundle", BundleOptions.MinifiedAndCombined)*@
+
+    <script>
+        //$(document).ready(function () {
+        //    document.getElementById("submit-button").disabled = true;
+        //})
+
+        function recaptchaCallback() {
+            document.getElementById("login-form").submit();
+            //$('#submit-button').removeAttr('disabled');
+        };
+    </script>
+}

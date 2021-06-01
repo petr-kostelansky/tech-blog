@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Knowledges & tutorials ";
+}
+
+@*<div class="introdiction-header">
+    <div class="container body-content">
+        <h1 class="logo-index logo-text">DevCode4</h1>
+    </div>
+</div>*@
+
+<div class="section-top introduction-home">
+    <div class="introduce-text">
+        <h1 class="logo-index logo-text">DevCode4</h1>
+        <p class="lead">
+            Knowledges & tutorials 
+        </p>
+    </div>
+</div>
+
+<div class="container body-content">
+
+    <div class="partial-view" data-url="@Url.Action("GetLastArticles", "Article", new { })">
+        <center style="margin-top: 150px; margin-bottom: 150px">
+            <i class="fa fa-spinner fa-spin"></i><span> Loading articles...</span>
+        </center>
+    </div>
+
+</div>

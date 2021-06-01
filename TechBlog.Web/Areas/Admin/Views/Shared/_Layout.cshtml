@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - DevCode4</title>
+    @*@Html.RenderCssBundle("~/Content/bundle-main.css.bundle", BundleOptions.MinifiedAndCombined)
+        @Html.RenderJsBundle("~/Scripts/bundle-modernizr.js.bundle", BundleOptions.MinifiedAndCombined)*@
+    @Html.HtmlCssCached("mainCss")
+    @RenderSection("Css", required: false)
+    @RenderSection("ScriptsHead", required: false)
+</head>
+<body>
+
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">DevCode4 - Admin</a>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="navbarCollapse" style="">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("index", "Home", new { Area = "" })">Home </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("index", "article", new { Area = "admin" })">Articles</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Tags<span class="caret"></span></a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="@Url.Action("Index", "Tag", new { area = "Admin" })">
+                                <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+                                Tags
+                            </a>
+                            <a class="dropdown-item" href="@Url.Action("Create", "Tag", new { area = "Admin", returnUrl = ViewContext.HttpContext.Request.Url.PathAndQuery })">
+                                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                                Create tag
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                @*<form class="form-inline mt-2 mt-md-0">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>*@
+            </div>
+        }
+    </nav>
+
+    <div class="container body-content">
+        <div id="js-notification">
+            @Html.Partial("_NotificationMessage")
+        </div>
+
+        <div class="clearfix"></div>
+
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - DevCode4</p>
+        </footer>
+    </div>
+
+    @*@Html.RenderJsBundle("~/Scripts/bundle-jquery.js.bundle", BundleOptions.MinifiedAndCombined)
+        @Html.RenderJsBundle("~/Scripts/bundle-bootstrap.js.bundle", BundleOptions.MinifiedAndCombined)*@
+    @Html.HtmlScriptsCached("mainJs")
+    @Html.HtmlScriptsCached("jqueryUi")
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

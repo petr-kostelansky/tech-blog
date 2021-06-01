@@ -1,0 +1,36 @@
+﻿@using TechBlog.Web.Common.Enums;
+
+@if (TempData[TempDataEnum.ErrorMessage.ToString()] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        @Html.Raw(@TempData[TempDataEnum.ErrorMessage.ToString()].ToString())
+    </div>
+
+    @*<div id="js-error-notification" class="alert alert-danger" role="alert">
+        <div>
+            <div class="float-left">
+                @Html.Raw(@TempData[TempDataEnum.ErrorMessage.ToString()].ToString())
+            </div>
+            <div class="float-right">
+                <a class="btn btn-link" id="js-close-notification" data-target="js-error-notification">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#js-close-notification").on("click", hideNotification)
+        });
+
+        function hideNotification(){
+            var element = $(this);
+
+            $(element.data("target")).hide(100);
+        }
+    </script>*@
+}

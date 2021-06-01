@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Error 500";
+}
+
+<div class="container body-content">
+    <div class="bs-callout bs-callout-danger" style="margin-top: 50px">
+        <h1>Error 500</h1>
+
+        <p class="lead">
+            Sorry! There was an internal server error. Please continue to home page.
+        </p>
+    </div>
+
+    <div style="margin: 50px 0">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            Back to homepage
+        </a>
+    </div>
+</div>

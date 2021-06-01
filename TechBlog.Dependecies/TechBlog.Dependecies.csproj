@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9540B5A2-8A8E-420C-8E40-23EE9CCEE257}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TechBlog.Dependecies</RootNamespace>
+    <AssemblyName>TechBlog.Dependecies</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Windsor.4.0.0\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Installers\DalAdminInstaller.cs" />
+    <Compile Include="Installers\DalWebInstaller.cs" />
+    <Compile Include="Installers\DalShareInstaller.cs" />
+    <Compile Include="Installers\DomainAdminInstaller.cs" />
+    <Compile Include="Installers\DomainWebInstaller.cs" />
+    <Compile Include="Installers\DomainShareInstaller.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TechBlog.Dal.Admin\TechBlog.Dal.Admin.csproj">
+      <Project>{a436111c-5175-448d-b93c-8927d5f81382}</Project>
+      <Name>TechBlog.Dal.Admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TechBlog.Dal.Cache\TechBlog.Dal.Cache.csproj">
+      <Project>{4d7c6dc1-99d6-4d31-9909-a482bfdacfdd}</Project>
+      <Name>TechBlog.Dal.Cache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TechBlog.Dal.Share\TechBlog.Dal.Share.csproj">
+      <Project>{ba18aaf5-f90d-4deb-bfe3-5afaf1c86d15}</Project>
+      <Name>TechBlog.Dal.Share</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TechBlog.Dal\TechBlog.Dal.csproj">
+      <Project>{3818b48f-82d9-469b-b096-2fd08160b9a9}</Project>
+      <Name>TechBlog.Dal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TechBlog.DbContext\TechBlog.DbContext.csproj">
+      <Project>{dbf91300-797b-43ad-8546-b9f200aa0796}</Project>
+      <Name>TechBlog.DbContext</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TechBlog.Domain.Admin\TechBlog.Domain.Admin.csproj">
+      <Project>{4FED82EC-3609-461C-AFA3-AC011E5E8D57}</Project>
+      <Name>TechBlog.Domain.Admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TechBlog.Domain.Share\TechBlog.Domain.Share.csproj">
+      <Project>{b4c4a4f8-88f6-499b-a601-3ad9e147dd67}</Project>
+      <Name>TechBlog.Domain.Share</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TechBlog.Domain\TechBlog.Domain.csproj">
+      <Project>{9db0c28c-1d0e-4281-a0d6-4bc3fbb497dc}</Project>
+      <Name>TechBlog.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TechBlog.Interfaces\TechBlog.Interfaces.csproj">
+      <Project>{5735a316-57c9-4364-907c-3b5b2a103d41}</Project>
+      <Name>TechBlog.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,18 @@
+{
+  "name": "asp.net",
+  "private": true,
+  "dependencies": {
+    "jQuery": "3.2.1",
+    "Microsoft.jQuery.Unobtrusive.Validation": "~3.2.3",
+    "bootstrap": "v4.0.0-beta",
+    "enlighterjs": "v2.11.1",
+    "mootools": "mootools-core#1.6.0",
+    "bootstrap-tokenfield": "v0.12.1",
+    "jquery-ui": "1.12.1",
+    "font-awesome": "Font-Awesome#v4.7.0",
+    "datatables.net-responsive-bs4": "2.2.0"
+  },
+  "resolutions": {
+    "bootstrap": "v4.0.0-beta"
+  }
+}

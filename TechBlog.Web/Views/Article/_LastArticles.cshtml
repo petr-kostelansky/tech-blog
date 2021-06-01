@@ -1,0 +1,23 @@
+﻿@model TechBlog.Web.ViewModels.Articles.ArticlesViewModel
+
+<div class="section-header text-center">
+    <h2>
+        Latest articles
+    </h2>
+</div>
+
+@foreach (var article in Model.Articles)
+            {
+    <div class="row">
+        <div class="col-md-12">
+            <h2>
+                <a href="@Url.Action("GetArticle", "Article", new { url = article.Url })">
+                    @article.Title
+                </a>
+            </h2>
+            <p class="col-md-12">
+                @article.Description
+            </p>
+        </div>
+    </div>
+}

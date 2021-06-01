@@ -1,0 +1,123 @@
+﻿@using System;
+@using System.Globalization;
+@model TechBlog.Web.ViewModels.Articles.ArticleViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+@section Css{
+
+    @Html.HtmlCssCached("articleCss")
+}
+
+@section GoogleAds{
+
+    @Html.Partial("~/Views/Ads/_AdsBottomFixed.cshtml")
+}
+
+<div class="section-top introduction-articles">
+    <div class="container body-content">
+        <h1 class="article">@Model.Title</h1>
+    </div>
+</div>
+
+<div id="section-tag">
+    <div class="container article-container">
+        <div class="raw">
+            <center>
+                @foreach (var tag in Model.Tags)
+            {
+                    <a href="@Url.Action("GetArticles", "Article", new { tag = @tag.Code })" class="article-tag">
+                        @tag.Name
+                    </a>
+                }
+            </center>
+        </div>
+    </div>
+</div>
+
+<div class="container body-content article-container">
+    <div class="article-created">
+        <div class="d-flex justify-content-start">
+            <div class="p-2">
+                <small class="float-left">
+                    <a href="@Url.Action("GetArticles", "Article", new { authorid = Model.AuthorId })">
+                        @Model.Author
+                    </a> | @Model.CreatedAt.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))
+                </small>
+            </div>
+            <div class="ml-auto p-2">
+                <small class="float-right">
+                    <i class="fa fa-eye" aria-hidden="true"> @Model.Visited.ToString("N0", CultureInfo.GetCultureInfo("en-US"))</i>
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="lead">
+                @Model.Description
+            </div>
+            <div class="article-content">
+                @Html.Raw(@Model.Content)
+            </div>
+        </div>
+    </div>
+
+    <div class="partial-view" data-url="@Url.Action("UnderArticle", "Ads")">
+        <center style="margin-bottom: 40px; margin-top: 40px">
+            <i class="fa fa-spinner fa-spin"></i> Loading ads...
+        </center>
+    </div>
+
+    @Html.Partial("_Disqus", Model)
+</div>
+
+
+
+@section Scripts{
+    @Html.HtmlScriptsCached("articleJs")
+
+    <script>
+        $(document).ready(function () {
+            document.getElements('pre').enlight(true);
+        });
+    </script>
+
+    <script type="application/ld+json">
+        {
+        "@@context": "http://schema.org",
+        "@@type": "NewsArticle",
+        "mainEntityOfPage": {
+        "@@type": "WebPage",
+        "@@id": "@Url.Action("GetArticle", "Article", new { @url = Model.Url }, Request.Url.Scheme)"
+        },
+        "headline": "@Model.Title",
+        @*"image": {
+                "@@type": "ImageObject",
+                "url": "https://google.com/thumbnail1.jpg",
+                "height": 800,
+                "width": 800
+            },*@
+        "datePublished": "@Model.CreatedAt.ToString("o")",
+        "dateModified": "@Model.LastChange.ToString("o")",
+        "author": {
+        "@@type": "Person",
+        "name": "@Model.Author"
+        },
+        "publisher": {
+        "@@type": "Organization",
+        "name": "DevCode4.com"
+        @*,"logo": {
+                "@@type": "ImageObject",
+                "url": "https://google.com/logo.jpg",
+                "width": 600,
+                "height": 60
+            }*@
+        },
+        "description": "@Model.Description"
+        }
+    </script>
+}

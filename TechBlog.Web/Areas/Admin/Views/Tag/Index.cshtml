@@ -1,0 +1,30 @@
+﻿@model TechBlog.Web.Areas.Admin.ViewModels.Tags.ListViewModel
+
+<h1>Tags</h1>
+<div class="row">
+    <table class="table table-striped">
+        <tr>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Edit</th>
+        </tr>
+
+        @foreach (var item in Model.Tags)
+            {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Code
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit",
+                   new { tagCode = item.Code, returnUrl = ViewContext.HttpContext.Request.Url.PathAndQuery },
+                   new { @class = "btn btn-secondary" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

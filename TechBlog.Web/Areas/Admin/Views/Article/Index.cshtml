@@ -1,0 +1,68 @@
+﻿@model TechBlog.Web.Areas.Admin.ViewModels.Article.ListViewModel
+@using PagedList.Mvc
+
+@section Css{
+    @Html.HtmlCssCached("dataTableCss")
+}
+
+@{
+    ViewBag.Title = "Articles";
+}
+
+<div class="row">
+    <div class="form-group">
+        @Html.ActionLink("Create article", "Create", "Article", new { area = "Admin", returnUrl = ViewContext.HttpContext.Request.Url.PathAndQuery }, new { @class = "btn btn-default" })
+    </div>
+</div>
+
+<table class="table table-striped no-wrap" id="articles-table" width="100%">
+    <thead>
+        <tr>
+            <th data-priority="1">Title</th>
+            <th data-priority="2" class="min-tablet-l">Created</th>
+            <th data-priority="3" class="min-tablet-l">Last change</th>
+            <th data-priority="1">Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var article in Model.Articles)
+            {
+            <tr>
+                <td>@article.Title</td>
+                <td>@article.Created.ToShortDateString()</td>
+                <td>@article.LastChange.ToShortDateString()</td>
+                <td>
+                    <a class="btn btn-default"
+                       href="@Url.Action("Edit", "Article", new { area = "Admin", articleId = article.Id, returnUrl = ViewContext.HttpContext.Request.Url.PathAndQuery })">
+                        Edit
+                    </a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.PagedListPager(Model.Articles, page => Url.Action("Index", new
+{
+    page = page,
+    pageSize = Model.Filter.PageSize,
+}))
+
+@section Scripts{
+    @Html.HtmlScriptsCached("dataTableJs")
+
+    <script>
+        $(document).ready(function () {
+
+            $('#articles-table').DataTable({
+                "responsive": true,
+                "autoWidth": false,
+                "searching": false,
+                "ordering": false,
+                "paging": false,
+                "info": false
+            });
+        });
+    </script>
+}
